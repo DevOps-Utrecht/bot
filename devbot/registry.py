@@ -17,7 +17,7 @@ class RegisteringDecorator(object):
         ''' Register command by name or list of aliasses. '''
         self.name = name
 
-    def __call__(self, func);
+    def __call__(self, func):
         ''' Register the callable under the given name. '''
 
         # If name is a list of aliasses register all

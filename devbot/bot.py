@@ -5,13 +5,14 @@ import logging
 import os
 import discord
 import dotenv
+from devbot.registry import COMMAND_DICT, safe_call, CommandNotFoundError
 from easy_logger import Logger
 
 CLIENT = discord.Client()
 #: The main discord client.
 LOGGER = Logger().get_logger(__name__)
 #: An Easy_logger instance.
-SYMBOL = '/'
+SYMBOL = '!'
 #: The command symbol
 
 @CLIENT.event
@@ -38,6 +39,7 @@ async def on_message(message):
                     message,
                     CLIENT
                 )
+            LOGGER.info("command")
         except CommandNotFoundError:
             LOGGER.debug('Command %s is unknown.', message_command[1:])
             return
