@@ -9,18 +9,28 @@ Follow the following steps:
 
 use: `git clone git@github.com:DevOps-Utrecht/bot.git` 
     or `git clone https://github.com/DevOps-Utrecht/bot.git`
+    
+    
 2. Set up a python virtual env.
 
 use: `python3.6 -m venv venv`
+
+
 3. Activate the virtual env.
 
 use: `source venv/bin/activate`
+
+
 4. Set up dependencies.
 
 use: `python setup.py install` or `python setup.py develop`
+
+
 5. Make a .env file.
 
 Create a `.env` file in the root directory containing `TOKEN=<Your Discord Token>`.
+
+
 6. Run the bot
  
 use: `start`
