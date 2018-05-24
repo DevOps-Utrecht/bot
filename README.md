@@ -50,6 +50,8 @@ Example:
 ```python
 #example.py
 
+from devbot.registry import Command
+
 @Command('ping')
 async def ping_command(*_args, **_kwargs):
     """ On !ping replies pong! """
