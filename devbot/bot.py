@@ -8,8 +8,9 @@ import dotenv
 from easy_logger import Logger
 
 CLIENT = discord.Client()
-''' The main discord client '''
+#: The main discord client.
 LOGGER = Logger().get_logger(__name__)
+#: An Easy_logger instance.
 
 @CLIENT.event
 async def on_ready():
