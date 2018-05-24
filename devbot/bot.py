@@ -1,16 +1,16 @@
 '''
     Main entry point for devbot.
 '''
-import logging
 import os
 import discord
 import dotenv
+import devbot.commands
 from devbot.registry import COMMAND_DICT, safe_call, CommandNotFoundError
-from easy_logger import Logger
+from devbot.tools.logging import get_logger
 
 CLIENT = discord.Client()
 #: The main discord client.
-LOGGER = Logger().get_logger(__name__)
+LOGGER = get_logger(__name__)
 #: An Easy_logger instance.
 SYMBOL = '!'
 #: The command symbol
@@ -56,6 +56,9 @@ def main():
     ''' Initialize the bot. '''
     # Load environment variables using dotenv.
     dotenv.load_dotenv('.env')
+
+    # Load commands
+    devbot.commands.load_plugins()
 
     # Connect to discord.
     CLIENT.run(os.environ['TOKEN'])

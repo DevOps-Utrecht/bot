@@ -4,6 +4,9 @@
     Hugely inspired by https://github.com/RobinSikkens/Sticky-discord
 '''
 from collections import defaultdict
+from devbot.tools.logging import get_logger
+
+LOGGER = get_logger(__name__)
 
 class RegisteringDecorator(object):
     '''
@@ -77,5 +80,7 @@ async def safe_call(target_dict, key, *args, **kwargs):
         raise
     except Exception as e:
         del target_dict[key.upper()]
+        LOGGER.warning('Exception occured, disabled %s', key)
+        LOGGER.exception(e)
         return "Someting is wrong, command disabled."
 

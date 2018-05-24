@@ -1,12 +1,11 @@
 '''
     Plugins folder to house all modular command files.
-
 '''
+from devbot.tools.logging import get_logger
 import os.path
 import importlib
-from easy_logger import Logger
 
-LOGGER = Logger.get_logger(__name__)
+LOGGER = get_logger(__name__)
 
 def load_plugins():
     '''
@@ -16,7 +15,7 @@ def load_plugins():
     LOGGER.info('Importing files from %s', root)
 
     for root, dirs, files in os.walk(root):
-        pyfiles = [file for file in filenames id file.endswith('.py')]
+        pyfiles = [file for file in files if file.endswith('.py')]
         for plugin in pyfiles:
             pluginname = plugin[:-3] # Strip extention
             LOGGER.info('Loading plugin %s', pluginname)
