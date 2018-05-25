@@ -1,8 +1,6 @@
 # DevOps-Bot
 A discord bot for DevOps
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/60f49e554e4445e69208a2f1ae45a5f0)](https://www.codacy.com/app/RobinSikkens/bot?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=DevOps-Utrecht/bot&amp;utm_campaign=Badge_Grade)
-
 ## Set-up
 Setting up a running version of DevBot is easy.
 
