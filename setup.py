@@ -7,7 +7,7 @@ setup(
     description="A discord bot created to work with the DevOps server",
     url="https://github.com/DevOps-Utrecht/DevOps-Bot",
     install_requires=["discord.py", "asyncio", "python-dotenv", "easy_logger", "sqlalchemy"],
-    packages=["devbot"],
+    packages=["devbot", "devbot.commands", "devbot.tools"],
     zip_safe=False,
     license="MIT",
     entry_points={"console_scripts": ["start=devbot.bot:main"]},
