@@ -8,7 +8,7 @@ import dotenv
 import devbot.commands
 from devbot.registry import COMMAND_DICT, safe_call, CommandNotFoundError
 from devbot.tools.logging import get_logger
-from devbot.tools.filewrapper import FileWrapper
+from devbot.tools.wrap import FileWrapper
 
 CLIENT = discord.Client()
 #: The main discord client.
