@@ -5,14 +5,14 @@
 import os
 import discord
 import dotenv
+import logging
 import devbot.commands
 from devbot.registry import COMMAND_DICT, safe_call, CommandNotFoundError
-from devbot.tools.logging import get_logger
 from devbot.tools.wrap import FileWrapper
 
 CLIENT = discord.Client()
 #: The main discord client.
-LOGGER = get_logger(__name__)
+LOGGER = logging.getLogger(__name__)
 #: An Easy_logger instance.
 SYMBOL = "!"
 #: The command symbol
@@ -60,6 +60,9 @@ def main():
     # Load environment variables using dotenv.
     dotenv.load_dotenv(".env")
 
+    # set up logger
+    logging_setup()
+
     # Load commands
     devbot.commands.load_plugins()
 
@@ -67,5 +70,29 @@ def main():
     CLIENT.run(os.environ["TOKEN"])
 
 
+def logging_setup():
+    file_level = logging.DEBUG
+    console_level = logging.INFO
+    if "FILE_LOGLEVEL" in os.environ.keys():
+        file_level = os.environ["FILE_LOGLEVEL"]
+    if "CONSOLE_LOGLEVEL" in os.environ.keys():
+        console_level = os.environ["CONSOLE_LOGLEVEL"]
+    # Set up basic functions to log to a file
+    logging.basicConfig(level=file_level,
+                        format="%(asctime)s %(levelname)-8s-%(name)-12s: %(message)s",
+                        datefmt="%y-%m-%d %H:%M",
+                        filename=f"./logs/bot.log",
+                        filemode="w")
+    # Make a console handler to pass INFO+ messages to console
+    console = logging.StreamHandler()
+    console.setLevel(console_level)
+    # Set up logging formatter for console
+    formatter = logging.Formatter('%(name)-12s: %(levelname)-8s %(message)s')
+    console.setFormatter(formatter)
+    logging.getLogger("").addHandler(console)
+
+
 if __name__ == "__main__":
     main()
+
+
