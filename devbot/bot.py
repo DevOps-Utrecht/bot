@@ -7,8 +7,11 @@ import discord
 import dotenv
 import logging
 import devbot.commands
+from devbot.database import db_url
 from devbot.registry import COMMAND_DICT, safe_call, CommandNotFoundError
 from devbot.tools.wrap import FileWrapper
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from apscheduler.jobstores.sqlalchemy import SQLAlchemyJobStore
 
 CLIENT = discord.Client()
 #: The main discord client.
@@ -16,6 +19,12 @@ LOGGER = logging.getLogger(__name__)
 #: An Easy_logger instance.
 SYMBOL = "!"
 #: The command symbol
+
+# Jobstore
+jobstores = {"default": SQLAlchemyJobStore(url=db_url)}
+
+# Setup apscheduler
+SCHEDULER = AsyncIOScheduler(jobstores=jobstores)
 
 
 @CLIENT.event
@@ -47,12 +56,16 @@ async def on_message(message):
         if not response:
             return
 
-        if isinstance(response, discord.Embed):
-            await CLIENT.send_message(message.channel, embed=response)
-        elif isinstance(response, FileWrapper):
-            await CLIENT.send_file(message.channel, response.name)
-        else:
-            await CLIENT.send_message(message.channel, response)
+        await send_response(response, message.channel)
+
+
+async def send_response(response, channel):
+    if isinstance(response, discord.Embed):
+        await CLIENT.send_message(channel, embed=response)
+    elif isinstance(response, FileWrapper):
+        await CLIENT.send_file(channel, response.name)
+    else:
+        await CLIENT.send_message(channel, response)
 
 
 def main():
@@ -66,33 +79,33 @@ def main():
     # Load commands
     devbot.commands.load_plugins()
 
+    # Start the scheduler
+    SCHEDULER.start()
+
     # Connect to discord.
     CLIENT.run(os.environ["TOKEN"])
 
 
 def logging_setup():
-    file_level = logging.DEBUG
-    console_level = logging.INFO
-    if "FILE_LOGLEVEL" in os.environ.keys():
-        file_level = os.environ["FILE_LOGLEVEL"]
-    if "CONSOLE_LOGLEVEL" in os.environ.keys():
-        console_level = os.environ["CONSOLE_LOGLEVEL"]
+    file_level = os.environ.get("FILE_LOGLEVEL", logging.DEBUG)
+    console_level = os.environ.get("CONSOLE_LOGLEVEL", logging.INFO)
+
     # Set up basic functions to log to a file
-    logging.basicConfig(level=file_level,
-                        format="%(asctime)s %(levelname)-8s-%(name)-12s: %(message)s",
-                        datefmt="%y-%m-%d %H:%M",
-                        filename=f"./logs/bot.log",
-                        filemode="w")
+    logging.basicConfig(
+        level=file_level,
+        format="%(asctime)s %(levelname)-8s-%(name)-12s: %(message)s",
+        datefmt="%y-%m-%d %H:%M",
+        filename=f"./logs/bot.log",
+        filemode="w",
+    )
     # Make a console handler to pass INFO+ messages to console
     console = logging.StreamHandler()
     console.setLevel(console_level)
     # Set up logging formatter for console
-    formatter = logging.Formatter('%(name)-12s: %(levelname)-8s %(message)s')
+    formatter = logging.Formatter("%(name)-12s: %(levelname)-8s %(message)s")
     console.setFormatter(formatter)
     logging.getLogger("").addHandler(console)
 
 
 if __name__ == "__main__":
     main()
-
-
