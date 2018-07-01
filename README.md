@@ -1,9 +1,14 @@
 # DevOps-Bot
 A discord bot for DevOps
 
+[![Build Status](https://travis-ci.org/DevOps-Utrecht/bot.svg?branch=master)](https://travis-ci.org/DevOps-Utrecht/bot)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/60f49e554e4445e69208a2f1ae45a5f0)](https://www.codacy.com/app/RobinSikkens/bot?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=DevOps-Utrecht/bot&amp;utm_campaign=Badge_Grade)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/DevOps-Utrecht/bot/blob/master/LICENSE)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
+[![GitHub issues](https://img.shields.io/github/issues/DevOps-Utrecht/bot.svg)](https://github.com/DevOps-Utrecht/bot/issues)
+[![GitHub forks](https://img.shields.io/github/forks/DevOps-Utrecht/bot.svg)](https://github.com/DevOps-Utrecht/bot/network)
+[![GitHub stars](https://img.shields.io/github/stars/DevOps-Utrecht/bot.svg)](https://github.com/DevOps-Utrecht/bot/stargazers)
+![meme](https://img.shields.io/badge/Uses-Badges-00aa00.svg)
 
 ## Set-up
 Setting up a running version of DevBot is easy.
