@@ -4,7 +4,6 @@ python:
 before_install:
 - touch .env
 install:
-- python setup.py install
 - pip install -e ".[dev]"
 script:
 - black --check devbot
