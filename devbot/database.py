@@ -23,14 +23,14 @@ class User(SQLAlchemyBase):
 
     __tablename__ = "user"
     # https://discordapp.com/developers/docs/resources/user
-    id = sa.Column(sa.String(32), primary_key=True)  # pylint: disable=invalid-name
+    user_id = sa.Column(sa.String(32), primary_key=True)
     username = sa.Column(sa.String(32))
-    discriminator = sa.Column(sa.String(4))
-    avatar = sa.Column(sa.String(32))
     bot = sa.Column(sa.Boolean)
-    mfa_enabled = sa.Column(sa.Boolean)
     verified = sa.Column(sa.Boolean)
     email = sa.Column(sa.String(32))
+
+    def __repr__(self):
+        return f"<User(name={self.username}, bot={self.bot}, id={self.user_id})>"
 
 
 class XKCD(SQLAlchemyBase):
