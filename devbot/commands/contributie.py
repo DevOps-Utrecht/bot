@@ -1,8 +1,6 @@
 """
 An easy command that generates a bunq.me link
 """
-import discord
-
 from urllib.parse import quote
 from devbot.registry import Command
 
