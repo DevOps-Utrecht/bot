@@ -51,9 +51,9 @@ class Event(object):
     """ An RSVP Event. """
 
     def __init__(self, name, present, undecided):
-        self.id = None
+        self.id =
         self.name = name
-        self.start = datetime.datetime.now()
+        self.start =
         self.message = None
 
     @property
