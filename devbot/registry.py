@@ -72,7 +72,7 @@ class CommandNotFoundError(Exception):
         super().__init__(message)
 
 
-async def safe_call(target_dict, key, *args, **kwargs):
+async def safe_disable(target_dict, key, *args, **kwargs):
     """ Wrapper that 'safely' calls a function, it disables a function if it breaks. """
 
     command_name = key.upper()
@@ -88,3 +88,24 @@ async def safe_call(target_dict, key, *args, **kwargs):
         LOGGER.warning("Exception occurred, disabled %s", key)
         LOGGER.exception(exc)
         return "Something is wrong, command disabled."
+
+
+async def safe_call(target_dict, key, *args, **kwargs):
+    """ Wrapper that safely calls a function and returns the error thrown. """
+
+    # Throw error when the called command does not exist in the dictionary.
+    # Should only happen when a safe call fails while bot is doing another
+    # command async.
+    command_name = key.upper()
+    if command_name not in target_dict:
+        raise CommandNotFoundError(key)
+
+    try:
+        return await target_dict[command_name](*args, **kwargs)
+    except (NameError, TypeError):
+        raise
+    except Exception as exc:  # pylint: disable=broad-except
+        LOGGER.warning("Exception occurred, passed with safe_call %s", key)
+        LOGGER.exception(exc)
+        return str.format("Something went wrong, could not complete command: "
+                          + "\n%s", exc)
