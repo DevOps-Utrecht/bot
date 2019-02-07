@@ -41,6 +41,9 @@ COMMAND_DICT = {}
 #: Dict for categorization, usefull when listing usable commands
 COMMAND_CATEGORIES = defaultdict(list)
 
+#: Dict for all registered keywords, maps uppercase keyword to functions
+KEYWORD_DICT = {}
+
 
 class Command(RegisteringDecorator):
     """
@@ -51,7 +54,7 @@ class Command(RegisteringDecorator):
     categories = COMMAND_CATEGORIES
 
     def __init__(self, name, category=None):
-        """ Store params and call super """
+        """ Store params and call super. """
         self.category = category
         super().__init__(name)
 
@@ -70,6 +73,12 @@ class CommandNotFoundError(Exception):
     def __init__(self, command):
         message = f"Command not found: {command}"
         super().__init__(message)
+
+
+class Keyword(RegisteringDecorator):
+    """ Decorator that registers it's function triggerable by keyword. """
+
+    target_dict = KEYWORD_DICT
 
 
 async def safe_call(target_dict, key, *args, **kwargs):
