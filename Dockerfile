@@ -3,7 +3,7 @@ LABEL maintainer "DevOps http://devops-utrecht.nl"
 
 COPY . /bot
 WORKDIR /bot
-RUN pip3 install --no-cache-dir -U pip pipenv \
+RUN pip install --no-cache-dir -U pip==19.0.3 pipenv==2018.11.26 \
     && pipenv install --system --deploy
 
 CMD ["pipenv", "run", "start"]
