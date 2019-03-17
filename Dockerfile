@@ -1,5 +1,5 @@
 FROM python:3.6
-MAINTAINER DevOps
+LABEL maintainer "DevOps http://devops-utrecht.nl"
 
 COPY . /bot
 WORKDIR /bot
