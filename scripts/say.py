@@ -4,6 +4,11 @@ import http.client
 import dotenv
 dotenv.load_dotenv(".env")
 
+if not len(sys.argv) == 2:
+    print(f"This script requires exactly 1 commandline argument, but got {len(sys.argv) - 1}")
+    sys.exit()
+
+
 def send( message ):
  
     # your webhook URL
